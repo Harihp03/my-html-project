@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Employee Joining Form</title>
+    <style>
+         .header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .header img {
+            height: 100px;
+            width: 100px;
+            object-fit: contain;
+        }
+
+        .header h1 {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 50px;
+            margin: 0;
+        }
+        body {
+            font-family: Cambria;
+            padding: 20px;
+            font-size: 20px;
+        }
+
+        h2 {
+            border-bottom: 1px solid #000;
+            padding-bottom: 5px;
+        }
+
+        .section {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin: 5px 0 2px;
+            font-size: 30px;
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            font-size: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        th,
+        td {
+            border: 1px solid #131212;
+            padding: 10px;
+            text-align: center;
+        }
+
+        img {
+            max-width: 300px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+    <script src="https://apis.google.com/js/api.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+
+<body>
+
+    <!-- PAGE 1 -->
+    <div id="page1">
+        <div style="padding: 30px; background: white;">
+            <div class="header">
+                <img src="data:image/jpeg;base64,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"
+                    alt="Junior Kuppanna Logo">
+                <h1>Junior Kuppanna Kitchen Private Limited</h1>
+            </div>
+        
+            <h2>Joining Form</h2>
+            <div class="section">
+                <h2>Professional Details</h2>
+                <label>Employee Location</label><input type="text">
+                <label>Division</label><input type="text">
+                <label>Department</label><input type="text">
+                <label>Designation</label><input type="text">
+                <label>Date of Joining</label><input type="date">
+                <label>Referred by</label><input type="text">
+                <label>Referrer’s Employee Code</label><input type="text">
+            </div>
+
+            <div class="section">
+                <h2>Personal Details</h2>
+                <label>Full Name</label><input type="text">
+                <label>Father / Spouse Name</label><input type="text">
+                <label>Gender</label>
+                <select>
+                    <option>Male</option>
+                    <option>Female</option>
+                    <option>Other</option>
+                </select>
+                <label>Marital Status</label>
+                <select>
+                    <option>Single</option>
+                    <option>Married</option>
+                </select>
+                <label>Present Address</label><input type= "address">
+                <label>Permanent Address</label><input type= "address">
+                <label>Date of Birth</label><input type="date">
+                <label>Place of Birth</label><input type="text">
+                <label>Nationality</label><input type="text">
+                <label>Email ID</label><input type="email">
+                <label>Aadhar Number</label><input type="text">
+            </div>
+        </div>
+    </div>
+
+    <!-- PAGE 2 -->
+    <div id="page2">
+        <div style="padding: 30px; background: rgb(255, 255, 255);">
+            <div class="section">
+                <h2>Education Background</h2>
+                <table>
+                    <tr>
+                        <th>Degree</th>
+                        <th>Institution</th>
+                        <th>Year</th>
+                        <th>Grade</th>
+                    </tr>
+                    <tr>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="section">
+                <h2>Employment History</h2>
+                <label>Last Worked Organisation</label><input type="text">
+                <label>Designation</label><input type="text">
+                <label>Telephone Number</label><input type="text">
+                <label>Last Drawn Salary</label><input type="text">
+                <h3>Previous Employment</h3>
+                <table>
+                    <tr>
+                        <th>Company</th>
+                        <th>Designation</th>
+                        <th>Period</th>
+                        <th>Responsibilities</th>
+                    </tr>
+                    <tr>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="section">
+                <h2>Bank Details</h2>
+                <label>Bank Name</label><input type="text">
+                <label>Account Number</label><input type="text">
+                <label>IFSC Code</label><input type="text">
+            </div>
+        </div>
+    </div>
+
+    <!-- PAGE 3 -->
+    <div id="page3">
+        <div style="padding: 30px; background: white;">
+            <div class="section">
+                <h2>References</h2>
+                <label>Reference 1 Name</label><input type="text">
+                <label>Designation</label><input type="text">
+                <label>Mobile</label><input type="text">
+                <label>Reference 2 Name</label><input type="text">
+                <label>Designation</label><input type="text">
+                <label>Mobile</label><input type="text">
+            </div>
+
+            <div class="section">
+                <h2>Declaration</h2>
+                <p>I hereby declare that the above information is true and correct.</p>
+                <label>Place</label><input type="text">
+                <label>Date</label><input type="date">
+            </div>
+
+            <div class="section">
+                <h2>Document Uploads</h2>
+                <label>Aadhar Front</label><input type="file" onchange="previewImage(this,'aadharFrontImg')"
+                    accept="image/*">
+                <img id="aadharFrontImg" style="display:none;">
+                <label>Aadhar Back</label><input type="file" onchange="previewImage(this,'aadharBackImg')"
+                    accept="image/*">
+                <img id="aadharBackImg" style="display:none;">
+                <label>PAN Card Front</label><input type="file" onchange="previewImage(this,'panFrontImg')"
+                    accept="image/*">
+                <img id="panFrontImg" style="display:none;">
+            </div>
+        </div>
+    </div>
+
+    <br />
+    <button onclick="generateThreePagePDF()">Download PDF</button>
+
+    <!-- JS Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+    <!-- JS Logic -->
+    <script>
+        function previewImage(input, imgId) {
+            const img = document.getElementById(imgId);
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    img.src = e.target.result;
+                    img.style.display = "block";
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        async function generateThreePagePDF() {
+            const { jsPDF } = window.jspdf;
+            const pdf = new jsPDF('p', 'mm', 'a4');
+            const width = pdf.internal.pageSize.getWidth();
+            const height = pdf.internal.pageSize.getHeight();
+            const margin = 15;
+            const usableWidth = width - 2 * margin;
+            const usableHeight = height - 2 * margin;
+
+            const drawBorder = () => {
+                pdf.setLineWidth(0.5);
+                pdf.rect(margin, margin, usableWidth, usableHeight);
+            };
+
+            const renderPage = async (elementId) => {
+                const element = document.getElementById(elementId);
+                const canvas = await html2canvas(element, { scale: 3 });
+                const imgData = canvas.toDataURL("image/png");
+                const imgProps = pdf.getImageProperties(imgData);
+                const imgHeight = (imgProps.height * usableWidth) / imgProps.width;
+                let fitHeight = imgHeight;
+                if (fitHeight > usableHeight) fitHeight = usableHeight;
+                pdf.addImage(imgData, 'PNG', margin, margin + 5, usableWidth, fitHeight - 5);
+                drawBorder();
+            };
+
+            await renderPage("page1");
+            pdf.addPage();
+            await renderPage("page2");
+            pdf.addPage();
+            await renderPage("page3");
+
+            const addImagePage = async (imgId, label) => {
+                const img = document.getElementById(imgId);
+                if (img && img.src && img.style.display !== 'none') {
+                    pdf.addPage();
+                    drawBorder();
+                    pdf.setFontSize(20);
+                    pdf.text(label, width / 2, margin + 5, { align: "center" });
+                    const imgW = 140;
+                    const imgH = 100;
+                    const x = (width - imgW) / 2;
+                    const y = margin + 15;
+                    pdf.addImage(img.src, 'PNG', x, y, imgW, imgH);
+                }
+            };
+
+            await addImagePage('aadharFrontImg', 'Aadhar Card - Front');
+            await addImagePage('aadharBackImg', 'Aadhar Card - Back');
+            await addImagePage('panFrontImg', 'PAN Card - Front');
+
+            pdf.save("employee-joining-form.pdf");
+        }
+    </script>
+</body>
+
+</html>
